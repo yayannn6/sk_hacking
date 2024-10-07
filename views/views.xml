@@ -1,0 +1,11 @@
+<odoo>
+  <data>
+     <template id="hacking_report_invoice" inherit_id="account.report_invoice">
+            <xpath expr="//t[@t-foreach='docs']" position="replace">
+               <t t-foreach="docs" t-as="o">
+                    <t t-call="sk_hacking.report_request_invoice_hacking"/>
+                </t>
+            </xpath>
+      </template>
+  </data>
+</odoo>

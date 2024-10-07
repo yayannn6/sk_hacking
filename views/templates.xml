@@ -1,0 +1,123 @@
+<odoo>
+    <template id="report_request_invoice_hacking">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <!-- Define your custom invoice layout here -->
+                <div class="page" style="font-family: 'Arial', sans-serif;">
+                    <div class="oe_structure"/>
+
+                    <!-- Header Section -->
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-xs-6" style="float: left;">
+                            <img src="/path/to/logo.png" class="img img-responsive" style="max-height: 50px;"/>
+                        </div>
+                        <div class="col-xs-6" style="text-align: right; float: right;">
+                            <h1 style="margin-top: 0;">INVOICE</h1>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-xs-6" style="float: left;">
+                            <h3 style="margin-top: 10px;">SK Builder Pte Ltd</h3>
+                            <p style="margin-bottom: 0;">
+                                1 Bukit Batok Crescent, #09-40 WCEGA Plaza<br/>
+                                Singapore 658064<br/>
+                                Tel: 6980 2980<br/>
+                                Email: enquiries@skbuilder.com.sg<br/>
+                                Website: http://www.skbuilder.com.sg
+                            </p>
+                        </div>
+                        <div class="col-xs-6" style="text-align: right; float: right;">
+                            <p>
+                                <strong>Invoice #:</strong> <t t-esc="o.number"/><br/>
+                                <strong>Invoice Date:</strong> <t t-esc="o.date_invoice"/><br/>
+                                <strong>Due Date:</strong> <t t-esc="o.date_due"/><br/>
+                                <strong>Sale Agent:</strong> <t t-esc="o.sale_agent.name"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Customer and Shipping Details -->
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-xs-6" style="text-align: right; float: right;">
+                            <h4>Bill To:</h4>
+                            <p>
+                                <t t-esc="o.partner_id.name"/><br/>
+                                <t t-esc="o.partner_id.contact_address"/>
+                            </p>
+                        </div>
+                        <div class="col-xs-6" style="text-align: right; float: right;">
+                            <h4>Ship To:</h4>
+                            <p>
+                                <t t-esc="o.partner_shipping_id.contact_address"/>
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Lines Table -->
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-xs-12">
+                            <table class="table" style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #f5f5f5; border: 1px solid #ddd;">
+                                        <th style="padding: 8px; border: 1px solid #ddd;">#</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;">Item</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;">Qty</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;">Rate</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;">Tax</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd;">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr t-foreach="o.invoice_line_ids" t-as="line" style="border: 1px solid #ddd;">
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.sequence"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.name"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.quantity"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.price_unit"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.tax_ids.mapped('name')"/></td>
+                                        <td style="padding: 8px; border: 1px solid #ddd;"><t t-esc="line.price_subtotal"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Summary Section -->
+                    <div class="row" style="margin-bottom: 20px;">
+                        <div class="col-xs-6" style="float: left;">
+                            <h4>Terms &amp; Conditions</h4>
+                            <p style="font-size: 12px;">
+                                <!-- Add your terms and conditions here -->
+                                1) Exclude any other works not mentioned above<br/>
+                                2) Take note that due care will be taken but unforeseen damages to items will be inevitable and we shall not be liable (e.g., adjacent areas, affected areas, common areas, neighbor's property, walls, ceilings, floors, etc.) and shall be the customer's responsibility to make good at own cost<br/>
+                                3) We will NOT be liable for any other Renovation Works including water leakage, Waterproofing issues which is not done by us<br/>
+                                4) Customer shall attend to any rectification of issues arising from all works that affected any third party's complaint during or after renovation<br/>
+                                5) Any additional works/items will be considered as VO<br/>
+                                6) Cheques payment (crossed) are to be made to SK BUILDER PTE LTD<br/>
+                                7) Bank transfer to be made to OCBC 686 639 378 001<br/>
+                                8) PayNow UEN 201471601KOCB<br/>
+                                9) Cash payments are not preferred and will be at customer's own risk<br/>
+                                10) SK BUILDER PTE LTD reserves the rights to charge interest @ 1.5% per month for non-payment or on any outstanding amount due.
+                            </p>
+                        </div>
+                        <div class="col-xs-6" style="text-align: right; float: right;">
+                            <table class="table" style="width: 100%; border-collapse: collapse;">
+                                <tr style="border: 1px solid #ddd;">
+                                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Sub Total</strong></td>
+                                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;"><t t-esc="o.amount_untaxed"/></td>
+                                </tr>
+                                <tr style="border: 1px solid #ddd;">
+                                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Discount</strong></td>
+                                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;"><t t-esc="o.amount_discount"/></td>
+                                </tr>
+                                <tr style="border: 1px solid #ddd;">
+                                    <td style="padding: 8px; border: 1px solid #ddd;"><strong>Total</strong></td>
+                                    <td style="padding: 8px; border: 1px solid #ddd; text-align: right;"><t t-esc="o.amount_total"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
