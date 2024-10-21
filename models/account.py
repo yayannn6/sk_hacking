@@ -20,3 +20,8 @@ class AccountMoveLine(models.Model):
         res = super(AccountMoveLine, self).button_cancel()
         self.write({'state': 'cancel', 'new_state': 'cancel'})
         return res
+
+    def action_register_payment(self):
+        for inv in self:
+            inv.state = 'posted'
+        return super(AccountMove, self).action_register_payment()
