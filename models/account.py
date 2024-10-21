@@ -24,4 +24,4 @@ class AccountMoveLine(models.Model):
     def action_register_payment(self):
         for inv in self:
             inv.state = 'posted'
-        return super(AccountMove, self).action_register_payment()
+        return super(AccountMoveLine, self).action_register_payment()
